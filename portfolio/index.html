@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crystal Game</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/crystal.css">
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            var wins = 0;
+            var losses = 0;
+            var randomnumber;
+             //we are getting a random number between 19-120
+            var totalScore = 0; //we will be adding TO in order to keep the score for the user
+
+            for(var i = 0; i < $('.imgStyle').length; i++) {
+                console.log($('.imgStyle')[i])
+
+                $($('.imgStyle')[i]).attr('value', Math.floor(Math.random() * 12) + 1)
+            }
+
+            $('.imgStyle').on('click', function(){
+            	totalScore++;
+                alert($(this).attr('value'));
+
+            });
+
+            	$('#getit').attr('value', Math.floor(Math.random() * 120) + 19)
+            	$('generate').on('click', function(){
+            		alert($(this).attr('value'));
+            	});           
+        });    
+    </script>
+</head>
+<body>
+	<br />
+		<p> <h2>Generate a random number to start the game!!!!</p></h2>
+			<p> <h2> Next click on each crystal to generate points!!</p></h2>
+				<p>    ...</p>
+        <div id = "divContainer">
+            <img class = "imgStyle" src = "assets/images/alexandrite300.jpg" width = "100" height = "100"/>
+            <img class = "imgStyle" src = "assets/images/ametrine.jpg"  width = "100" height = "100"/>
+            <img class = "imgStyle" src = "assets/images/aquamarine.jpg" width = "100" height = "100"/>
+            <img class = "imgStyle" src = "assets/images/blue-crystal.jpg" width = "110" height = "110"/>
+        </div>
+        	<div id="page-wrap">
+        
+        		<img id = "#raN" src="assets/images/randomnumb.png" alt="get a random number between..." />
+        			<input type="text" id="lownumber" value="19" />
+        			AND
+        			<input type="text" id="highnumber" value="120" />
+        				<br />
+        
+        <button id="getit">Generate!</button>
+        
+        <div id="randomnumber"></div>
+
+        <br />
+        <br />
+        <br />
+        
+        <input type="text" id="wins" value = "wins" />
+        AND
+        <input type="text" id="losses" value= "losses" />
+        <br />
+        <input type="text" id="total score" value = "total score"/>
+	
+	</div>
+
+<script>
+function IsNumeric(n){
+    return !isNaN(n);
+} 
+$(function(){
+	
+    $("#getit").click(function() {
+
+        var numLow = $("#lownumber").val();
+        var numHigh = $("#highnumber").val();
+        
+        var adjustedHigh = (parseFloat(numHigh) - parseFloat(numLow)) + 1;
+        
+        var numRand = Math.floor(Math.random()*adjustedHigh) + parseFloat(numLow);
+        
+        if ((IsNumeric(numLow)) && (IsNumeric(numHigh)) && (parseFloat(numLow) <= parseFloat(numHigh)) && (numLow != '') && (numHigh != '')) {
+            $("#randomnumber").text(numRand);
+        } else {
+            $("#randomnumber").text("Careful now...");
+        }
+        
+        return false;
+    });
+    
+    $("input[type=text]").each(function(){
+        $(this).data("first-click", true);
+    });
+    
+    $("input[type=text]").focus(function(){
+       
+        if ($(this).data("first-click")) {
+            $(this).val("");
+            $(this).data("first-click", false);
+            $(this).css("color", "black");
+        }        
+    });
+	
+		if (randomnumber === totalScore){
+		wins++;
+		}
+			else {
+			losses++;
+	}
+});
+
+</script>
+<!--<script src="assets/javascript/game.js"></script>-->
+</body>
+</html>
