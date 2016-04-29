@@ -1,14 +1,23 @@
 *					{ margin: 0; padding: 0; }
 body				{ font: 14px Georgia, serif; text-align: center; }
 
-h1                  { font: bold 20px Helvetica, Sans-Serif; letter-spacing: -1px; }
+h3                  { font: bold 20px Helvetica, Sans-Serif; letter-spacing: -1px; }
 
 #page-wrap		    { width: 500px; margin: 25px auto; }
 
 input[type=text]    { padding: 10px; color: #999; font: bold 20px Helvetica, Sans-Serif; 
                       width: 105px; margin: 10px 0; }  
-#randomnumber       { font-size: 80px;  }
+#randomnumber       { font-size: 65px;  }
 
 #getit{
 	font-size: 20px;
+}
+
+h1 {
+    background-color: lightgrey;
+    width: 100px;
+    padding: 20px;
+    border: 10px solid navy;
+    margin: 15px;
+    float:left;
 }

@@ -6,32 +6,6 @@
 
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
 
-    <script>
-        $(document).ready(function() {
-            var wins = 0;
-            var losses = 0;
-            var randomnumber;
-             //we are getting a random number between 19-120
-            var totalScore = 0; //we will be adding TO in order to keep the score for the user
-
-            for(var i = 0; i < $('.imgStyle').length; i++) {
-                console.log($('.imgStyle')[i])
-
-                $($('.imgStyle')[i]).attr('value', Math.floor(Math.random() * 12) + 1)
-            }
-
-            $('.imgStyle').on('click', function(){
-            	totalScore++;
-                alert($(this).attr('value'));
-
-            });
-
-            	$('#getit').attr('value', Math.floor(Math.random() * 120) + 19)
-            	$('generate').on('click', function(){
-            		alert($(this).attr('value'));
-            	});           
-        });    
-    </script>
 </head>
 <body>
 	<br />
@@ -45,26 +19,23 @@
             <img class = "imgStyle" src = "assets/images/blue-crystal.jpg" width = "110" height = "110"/>
         </div>
         	<div id="page-wrap">
-        
         		<img id = "#raN" src="assets/images/randomnumb.png" alt="get a random number between..." />
         			<input type="text" id="lownumber" value="19" />
         			AND
         			<input type="text" id="highnumber" value="120" />
-        				<br />
-        
+        				<br />        
         <button id="getit">Generate!</button>
         
-        <div id="randomnumber"></div>
+       <h1> <div id="randomnumber"></div></h1>
 
         <br />
         <br />
-        <br />
         
-        <input type="text" id="wins" value = "wins" />
-        AND
-        <input type="text" id="losses" value= "losses" />
+        <h1><div type="text" id="wins"></div>win score</h1>
         <br />
-        <input type="text" id="total score" value = "total score"/>
+        <h1><div type="text" id="losses"></div>loss score</h1>
+        <br />
+        <h1><div type="text" id="totalScore"></div>score</h1>
 	
 	</div>
 
@@ -73,44 +44,68 @@ function IsNumeric(n){
     return !isNaN(n);
 } 
 $(function(){
-	
-    $("#getit").click(function() {
+	var wins = 0;
+    var losses = 0;
+    var randomnumber;
+     //we are getting a random number between 19-120
+    var totalScore = 0; //we will be adding TO in order to keep the score for the user
 
+    $("#getit").click(function() {
         var numLow = $("#lownumber").val();
         var numHigh = $("#highnumber").val();
         
         var adjustedHigh = (parseFloat(numHigh) - parseFloat(numLow)) + 1;
         
-        var numRand = Math.floor(Math.random()*adjustedHigh) + parseFloat(numLow);
-        
+        randomnumber = Math.floor(Math.random()*adjustedHigh) + parseFloat(numLow);
         if ((IsNumeric(numLow)) && (IsNumeric(numHigh)) && (parseFloat(numLow) <= parseFloat(numHigh)) && (numLow != '') && (numHigh != '')) {
-            $("#randomnumber").text(numRand);
+            $("#randomnumber").text(randomnumber);
         } else {
             $("#randomnumber").text("Careful now...");
         }
-        
         return false;
     });
-    
-    $("input[type=text]").each(function(){
-        $(this).data("first-click", true);
+
+    for(var i = 0; i < $('.imgStyle').length; i++) {
+        $($('.imgStyle')[i]).attr('value', Math.floor(Math.random() * 12) + 1)
+    }
+    $('.imgStyle').on('click', function(){
+        if (randomnumber > 0) {
+            totalScore = totalScore + parseInt($(this).attr('value'))
+            $('#totalScore').html(totalScore);
+            checkScores(randomnumber, totalScore)
+        } else {
+            alert('pick a number!!')
+            return false
+        }
     });
+
+    function reSet (){
+        randomnumber = 0;
+        totalScore = 0;
+        $("#randomnumber").empty();
+        $("#totalScore").empty();
     
-    $("input[type=text]").focus(function(){
-       
-        if ($(this).data("first-click")) {
-            $(this).val("");
-            $(this).data("first-click", false);
-            $(this).css("color", "black");
-        }        
-    });
-	
-		if (randomnumber === totalScore){
-		wins++;
-		}
-			else {
-			losses++;
-	}
+        for(var i = 0; i < $('.imgStyle').length; i++) {
+            $($('.imgStyle')[i]).attr('value', Math.floor(Math.random() * 12) + 1)
+        }
+    }
+    function checkScores(goalScore, yourScore) {
+        if (goalScore === yourScore) {
+            wins++
+            $('#wins').html(wins);
+            checkScores(wins)
+            alert('YAY!! YOU WIN!!')
+            reSet();
+
+        } else if (goalScore < yourScore) {
+            losses++
+            $('#losses').html(losses);
+            checkScores(losses)
+            alert('Sorry, you lost! try again!')
+            reSet();
+        }
+    }    
+    
 });
 
 </script>
